@@ -51,15 +51,22 @@ if [[ ! -d ~/.dotfiles ]]; then
 	cp -R $tmp_dir ~/.dotfiles	
 else
 	info "Coping your .dotfiles to .dotfiles_old"
-	mv $HOME/.dotfiles $HOME/.dotfiles_old
+	mv -f $HOME/.dotfiles $HOME/.dotfiles_old
 	info "Coping new .dotfiles"
 	cp -R $tmp_dir ~/.dotfiles
 fi
 
 # Sourcing new .dotfiles
 echo "source ~/.dotfiles/init.sh" >> ~/.bashrc
-source ~/.bashrc
+
 
 # Garbage colector :D
-info "Remove used files"
+info "Remove temporary files"
 rm -rf $tmp_dir && rm $compress_file
+
+# Done!
+echo -e "\e[1;222;42m Done, Have fun! \e[0m" 
+sleep 1
+
+# Restart .bashrc
+exec bash
