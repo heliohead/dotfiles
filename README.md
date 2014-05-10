@@ -5,7 +5,7 @@
 To install it:
 
 ```shellscript
-bash -c "$(curl -fsSL http://goo.gl/2zURr9)"
+bash -c "$(curl -fsSL http://git.io/h-HxBg)"
 ```
 
 Use as you like
