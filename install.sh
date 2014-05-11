@@ -12,7 +12,7 @@ dep=(curl unzip git)
 function message_exit(){
   red='\e[0;31m'
   NC='\e[0m' 
-  echo -e "${red}##=> $1 ${NC}"
+  echo -e "${red}+==-> $1 ${NC}"
   exit 1
 }
 
@@ -20,10 +20,10 @@ function message_exit(){
 function info(){
   blue='\e[0;34m'
   NC='\e[0m' 
-  echo -e "${blue}##=> $1 ${NC}"
+  echo -e "${blue}+==-> $1 ${NC}"
 }
 
-# Verify is dep is installed
+# Verify dep installed
 for i in "${dep[@]}"; do
 	if ! command -v $i >/dev/null; then
 	  message_exit "You need to have $i installed"
@@ -34,30 +34,29 @@ done
 tmp_dir=/tmp/dotfiles-master
 compress_file=/tmp/dotfiles.zip
 src_files=https://github.com/heliohead/dotfiles/archive/master.zip
-bk_files="/tmp/yours_${RAMDOM}.sh"
+
 
 # Download files
-info "Download $compress_file to $tmp_dir"
+info "Download to $tmp_dir"
 curl -Ls -o $compress_file $src_files
+
+# Exit if download error
+[ -f $compress_file ] || message_exit "Couldn't download files"
 
 # Extracting 
 info "Extracting $compress_file"
 unzip	-q $compress_file -d /tmp
 
+# Coping files
+info	"Coping you new dotfiles on $HOME "
+for i in $(find $tmp_dir/files -name '.*'); do
+  cp -iR $i $HOME
+done
 
-# Make a backup file if exist folder
-if [[ ! -d ~/.dotfiles ]]; then
-	info "Coping new .dotfiles"
-	cp -R $tmp_dir ~/.dotfiles	
-else
-	info "Coping your .dotfiles to .dotfiles_old"
-	mv -f $HOME/.dotfiles $HOME/.dotfiles_old
-	info "Coping new .dotfiles"
-	cp -R $tmp_dir ~/.dotfiles
-fi
+
 
 # Sourcing new .dotfiles
-echo "source ~/.dotfiles/init.sh" >> ~/.bashrc
+echo "source ~/.bash/init.sh" >> ~/.bashrc
 
 
 # Garbage colector :D
