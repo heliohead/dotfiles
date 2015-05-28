@@ -1,38 +1,37 @@
 set nocompatible
 filetype off
-set t_Co=256
 let &t_AB="\e[48;5;%dm"
 let &t_AF="\e[38;5;%dm"
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#begin()
 " let Vundle manage Vundle
- " required!
- Plugin 'gmarik/Vundle.vim'
+" required!
+Plugin 'gmarik/Vundle.vim'
 
- " My Plugins here:
- Plugin 'tpope/vim-fugitive'
+" My Plugins here:
+Plugin 'tpope/vim-fugitive'
 " Plugin 'Lokaltog/vim-easymotion'
 " Plugin 'rstacruz/sparkup', {'rtp': 'vim'}
- Plugin 'tpope/vim-rails.git'
- Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
- Plugin 'plasticboy/vim-markdown'
- Plugin 'groenewege/vim-less'
- Plugin 'editorconfig-vim'
- Plugin 'bling/vim-airline'
- Plugin 'airblade/vim-gitgutter'
- Plugin 'danro/rename.vim'
- Plugin 'scrooloose/NERDTree'
- Plugin 'scrooloose/NERDCommenter'
- Plugin 'scrooloose/syntastic'
- Plugin 'jiangmiao/auto-pairs'
- Plugin 'Tabular'
- Plugin 'terryma/vim-multiple-cursors'
- Plugin 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'yes \| ./install'}
- Plugin 'SirVer/ultisnips'
- Plugin 'honza/vim-snippets'
- Plugin 'suan/vim-instant-markdown'     foo bar baz
- " ...
+Plugin 'tpope/vim-rails.git'
+Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
+Plugin 'plasticboy/vim-markdown'
+Plugin 'groenewege/vim-less'
+Plugin 'editorconfig-vim'
+Plugin 'bling/vim-airline'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'danro/rename.vim'
+Plugin 'scrooloose/NERDTree'
+Plugin 'scrooloose/NERDCommenter'
+Plugin 'scrooloose/syntastic'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'Tabular'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'yes \| ./install'}
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'suan/vim-instant-markdown'
+" ...
 
 call vundle#end()            " required
 filetype plugin indent on     " required!
@@ -248,16 +247,16 @@ set fileformats=unix,dos
 
 " Abbreviations
 "augroup abbreviations
-    "autocmd!
-    "autocmd FileType html :iabbrev <buffer> --- &mdash;
-    "autocmd FileType javascript :iabbrev <buffer> ret return
+"autocmd!
+"autocmd FileType html :iabbrev <buffer> --- &mdash;
+"autocmd FileType javascript :iabbrev <buffer> ret return
 "augroup END
 set timeout
 set ttimeout
 set ttimeoutlen=0
 
 " Customisations based on house-style
-autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noexpandtab
+autocmd FileType javascript setlocal ts=4 sts=4 sw=4 expandtab
 
 set matchtime=0
 source ~/.gvimrc
