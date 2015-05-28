@@ -31,6 +31,7 @@ call vundle#begin()
  Plugin 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'yes \| ./install'}
  Plugin 'SirVer/ultisnips'
  Plugin 'honza/vim-snippets'
+ Plugin 'suan/vim-instant-markdown'
  " ...
 
 call vundle#end()            " required
