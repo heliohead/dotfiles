@@ -31,7 +31,7 @@ call vundle#begin()
  Plugin 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'yes \| ./install'}
  Plugin 'SirVer/ultisnips'
  Plugin 'honza/vim-snippets'
- Plugin 'suan/vim-instant-markdown'
+ Plugin 'suan/vim-instant-markdown'     foo bar baz
  " ...
 
 call vundle#end()            " required
@@ -168,6 +168,7 @@ autocmd BufRead,BufNewFile *.json set ft=json syntax=javascript
 autocmd BufRead,BufNewFile *.twig set ft=htmldjango
 autocmd BufRead,BufNewFile *.rabl set ft=ruby
 autocmd BufRead,BufNewFile *.jade set ft=jade
+set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
 
 " Neocomplete filebased completion
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
@@ -234,7 +235,7 @@ inoremap jk <esc>
 "Ctrl P
 "let g:ctrlp_map = '<c-p>'
 "let g:ctrlp_cmd = 'CtrlP'
-set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
+
 
 " Always show statusline
 set laststatus=2
@@ -254,6 +255,9 @@ set fileformats=unix,dos
 set timeout
 set ttimeout
 set ttimeoutlen=0
+
+" Customisations based on house-style
+autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noexpandtab
 
 set matchtime=0
 source ~/.gvimrc
