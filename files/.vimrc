@@ -29,6 +29,8 @@ call vundle#begin()
  Plugin 'Tabular'
  Plugin 'terryma/vim-multiple-cursors'
  Plugin 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'yes \| ./install'}
+ Plugin 'SirVer/ultisnips'
+ Plugin 'honza/vim-snippets'
  " ...
 
 call vundle#end()            " required
@@ -137,13 +139,12 @@ nnoremap <leader>3 :colorscheme molokai<cr>
 nnoremap <leader>4 :colorscheme badwolf<cr>
 
 " On insert mode short to begin and end of line
-inoremap <C-e> <C-o>$
-inoremap <C-a> <C-o>0
-
+inoremap <C-l> <C-o>j$
+inoremap <C-h> <C-o>0
 
 " On insert mode short to begin and end of word
-inoremap <S-e> <C-o>e
-inoremap <S-a> <C-o>b
+inoremap <silence> <C-j> <C-o>b
+inoremap <silence> <C-k> <C-o>e
 
 " badwolf settings
 let g:badwolf_darkgutter = 1
