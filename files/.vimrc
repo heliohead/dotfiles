@@ -146,13 +146,6 @@ inoremap <C-h> <C-o>0
 inoremap <silence> <C-j> <C-o>b
 inoremap <silence> <C-k> <C-o>e
 
-" badwolf settings
-let g:badwolf_darkgutter = 1
-let g:badwolf_tabline = 2
-let g:badwolf_css_props_highlight = 1
-let g:badwolf_html_link_underline = 1
-
-
 " Airline settings
 let g:airline#extensions#tabline#enabled =1
 let g:airline_powerline_fonts=1
