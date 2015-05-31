@@ -11,7 +11,7 @@ dep=(curl unzip git)
 # Make messages to skip
 function message_exit(){
   red='\e[0;31m'
-  NC='\e[0m' 
+  NC='\e[0m'
   echo -e "${red}+==-> $1 ${NC}"
   exit 1
 }
@@ -19,15 +19,15 @@ function message_exit(){
 # Make messages to info
 function info(){
   blue='\e[0;34m'
-  NC='\e[0m' 
+  NC='\e[0m'
   echo -e "${blue}+==-> $1 ${NC}"
 }
 
 # Verify dep installed
 for i in "${dep[@]}"; do
-	if ! command -v $i >/dev/null; then
-	  message_exit "You need to have $i installed"
-	fi 
+  if ! command -v $i >/dev/null; then
+    message_exit "You need to have $i installed"
+  fi
 done
 
 # Some variables
@@ -43,7 +43,7 @@ curl -Ls -o $compress_file $src_files
 # Exit if download error
 [ -f $compress_file ] || message_exit "Couldn't download files"
 
-# Extracting 
+# Extracting
 info "Extracting $compress_file"
 unzip	-q $compress_file -d /tmp
 
@@ -64,7 +64,7 @@ info "Remove temporary files"
 rm -rf $tmp_dir && rm $compress_file
 
 # Done!
-echo -e "\e[1;222;42m Done, Have fun! \e[0m" 
+echo -e "\e[1;222;42m Done, Have fun! \e[0m"
 sleep 1
 
 # Restart .bashrc
