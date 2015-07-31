@@ -11,7 +11,7 @@ Plugin 'gmarik/Vundle.vim'
 
 " My Plugins here:
 Plugin 'tpope/vim-fugitive'
-" Plugin 'Lokaltog/vim-easymotion'
+Plugin 'tpope/vim-surround'
 " Plugin 'rstacruz/sparkup', {'rtp': 'vim'}
 Plugin 'tpope/vim-rails.git'
 Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
@@ -22,7 +22,7 @@ Plugin 'bling/vim-airline'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'danro/rename.vim'
 Plugin 'scrooloose/NERDTree'
-Plugin 'scrooloose/NERDCommenter'
+Plugin 'tomtom/tcomment_vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'Tabular'
@@ -31,6 +31,11 @@ Plugin 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'yes \| ./install'}
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'suan/vim-instant-markdown'
+" Plugin 'jaxbot/browserlink.vim'
+Plugin 'henrik/vim-ruby-runner'
+Plugin 'benmills/vimux'
+Plugin 'digitaltoad/vim-jade'
+Plugin 'burnettk/vim-angular'
 " ...
 
 call vundle#end()            " required
@@ -50,6 +55,10 @@ noremap <Up> gk
 
 " copy
 vnoremap <C-c> "*y
+
+" mult cursors
+let g:multi_cursor_next_key='<C-d>'
+let g:multi_cursor_prev_key='<C-s>'
 
 " Command T settings
 let g:CommandTInputDebounce = 200
@@ -119,11 +128,10 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 " Select pasted text
 nnoremap <leader>v V`]
 
-" navigate buffers
-map <C-h> :tabp<CR>
-map <C-k> :bprev<CR>
-map <C-l> :tabn<CR>
-map <C-j> :bnext<CR>
+" Avoid bad identation when paste text
+nnoremap <C-i> :set invpaste paste?<CR>
+set pastetoggle=<C-i>
+set showmode
 
 " Buffers
 nnoremap <leader>T :enew<cr>
@@ -132,15 +140,18 @@ nnoremap gt :bprevious<cr>
 nnoremap gd :bdelete<cr>
 nnoremap <leader>bl :ls<CR>
 
-" Theme stuff
-nnoremap <leader>1 :colorscheme obsidian<cr>
-nnoremap <leader>2 :colorscheme tomorrow-night-bright<cr>
-nnoremap <leader>3 :colorscheme molokai<cr>
-nnoremap <leader>4 :colorscheme badwolf<cr>
+" Map Crtl p to Fuzzy Finder
+noremap <C-p> :FZF<CR>
+inoremap <C-p> <C-o>:FZF<CR>
+
+" NerdTree config
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+map <C-n> :NERDTreeToggle<CR>
 
 " On insert mode short to begin and end of line
-inoremap <C-l> <C-o>j$
-inoremap <C-h> <C-o>0
+inoremap <C-e> <C-o>$
+inoremap <C-a> <C-o>0
 
 " On insert mode short to begin and end of word
 inoremap <silence> <C-j> <C-o>b
@@ -201,6 +212,10 @@ vnoremap <leader>a= :Tabularize /=<CR>
 nnoremap <leader>a: :Tabularize /:\zs<CR>
 vnoremap <leader>a: :Tabularize /:\zs<CR>
 
+" Vimux
+nnoremap <silent> cr :VimuxRunCommand("clear; ruby " . bufname("%"))<CR>
+nnoremap <silent> ct :VimuxCloseRunner<CR>
+
 " Custom maps
 set pastetoggle=<leader>p
 nnoremap <leader>m :w <BAR> !lessc % > %:t:r.css<CR><space>
@@ -255,8 +270,13 @@ set timeout
 set ttimeout
 set ttimeoutlen=0
 
-" Customisations based on house-style
-autocmd FileType javascript setlocal ts=4 sts=4 sw=4 expandtab
-
+" Kill trailing spaces
+nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 set matchtime=0
 source ~/.gvimrc
+source ~/.vim/bundle/simple-utilities.vim
+let g:instant_markdown_autostart = 0
+
+" Enable mouse use in all modes
+set mouse=a
+set ttymouse=xterm2
