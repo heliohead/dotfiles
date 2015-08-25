@@ -1,4 +1,5 @@
 set nocompatible
+source ~/.gvimrc
 filetype off
 let &t_AB="\e[48;5;%dm"
 let &t_AF="\e[38;5;%dm"
@@ -8,7 +9,6 @@ call vundle#begin()
 " let Vundle manage Vundle
 " required!
 Plugin 'gmarik/Vundle.vim'
-
 " My Plugins here:
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
@@ -31,23 +31,29 @@ Plugin 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'yes \| ./install'}
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'suan/vim-instant-markdown'
-" Plugin 'jaxbot/browserlink.vim'
 Plugin 'henrik/vim-ruby-runner'
 Plugin 'benmills/vimux'
 Plugin 'digitaltoad/vim-jade'
 Plugin 'burnettk/vim-angular'
 " ...
-
 call vundle#end()            " required
 filetype plugin indent on     " required!
+" .. end vundle
 
-"set guifont       = "Monaco:14"
-let g:colors_name = "dracula"
+" Theme config
+let g:dracula_termcolors = 256
+colorscheme dracula
 let macvim_skip_colorscheme=1
 set modelines=0
 syntax enable
 set nu
 set ruler
+
+" Use 256 colours (Use this setting only if your terminal supports 256 colours)
+set t_Co=256
+
+" Enable mouse use in all modes
+set mouse=a
 
 " remap arrow keys
 noremap <Down> gj
@@ -60,14 +66,10 @@ vnoremap <C-c> "*y
 let g:multi_cursor_next_key='<C-d>'
 let g:multi_cursor_prev_key='<C-s>'
 
-" Command T settings
-let g:CommandTInputDebounce = 200
-let g:CommandTFileScanner = "watchman"
-let g:CommandTWildIgnore = &wildignore . ",**/bower_components/*" . ",**/node_modules/*" . ",**/vendor/*"
-let g:CommandTMaxHeight = 30
-let g:CommandTMaxFiles = 500000
-
-"Some tips from http://stevelosh.com/blog/2010/09/coming-home-to-vim/"
+" NerdTree config
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+map <C-n> :NERDTreeToggle<CR>
 
 set tabstop=2  shiftwidth=2  softtabstop=2
 set expandtab
@@ -85,14 +87,31 @@ set backspace=indent,eol,start
 set laststatus=2
 set cursorline
 set list
+set undolevels=20
+set title
+set noerrorbells
+set noswapfile
+set nobackup
+nnoremap ; :
+highlight ExtraWhitespace ctermbg=red guibg=red
+
+" Whitespace fixes
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+nmap <leader>0 :%s/\s\+$//<cr>:let @/=''<CR>
+
 let mapleader = ","
 
 " Limited line on 80 chars
 set textwidth=80
 set colorcolumn=+1
 
-"Custom settings
+"Settings for markdown plugin
 set nofoldenable    " disable folding
 let g:vim_markdown_folding_disabled=1
 
@@ -100,6 +119,7 @@ let g:vim_markdown_folding_disabled=1
 nnoremap / /\v
 vnoremap / /\v
 set ignorecase
+set wildignorecase " Ignore case for open files
 set smartcase
 set gdefault
 set incsearch
@@ -120,18 +140,12 @@ set linebreak
 nnoremap j gj
 nnoremap k gk
 
-"User customizations"
-
-" Strips whitespace
-nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
-
 " Select pasted text
 nnoremap <leader>v V`]
 
 " Avoid bad identation when paste text
 nnoremap <C-i> :set invpaste paste?<CR>
 set pastetoggle=<C-i>
-set showmode
 
 " Buffers
 nnoremap <leader>T :enew<cr>
@@ -144,11 +158,6 @@ nnoremap <leader>bl :ls<CR>
 noremap <C-p> :FZF<CR>
 inoremap <C-p> <C-o>:FZF<CR>
 
-" NerdTree config
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-map <C-n> :NERDTreeToggle<CR>
-
 " On insert mode short to begin and end of line
 inoremap <C-e> <C-o>$
 inoremap <C-a> <C-o>0
@@ -160,8 +169,6 @@ inoremap <silence> <C-k> <C-o>e
 " Airline settings
 let g:airline#extensions#tabline#enabled =1
 let g:airline_powerline_fonts=1
-nnoremap <leader>d :NERDTreeToggle<CR>
-nnoremap <leader>f :NERDTreeFind<CR>
 
 autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
 autocmd BufRead,BufNewFile *.md set filetype=markdown
@@ -188,24 +195,6 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
-
-" Whitespace fixes
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
-
-set undolevels=20
-set title
-
-set noerrorbells
-set noswapfile
-set nobackup
-nnoremap ; :
-
-
 " Tabular
 nnoremap <leader>a= :Tabularize /=<CR>
 vnoremap <leader>a= :Tabularize /=<CR>
@@ -219,10 +208,16 @@ nnoremap <silent> ct :VimuxCloseRunner<CR>
 " Custom maps
 set pastetoggle=<leader>p
 nnoremap <leader>m :w <BAR> !lessc % > %:t:r.css<CR><space>
-
-nnoremap <leader>vi :vsplit $MYVIMRC<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
 vnoremap <leader>" <esc>`<i"<esc>`>a"<esc>
+
+" Shortcut to .vimrc
+nmap <leader>v :tabedit $MYVIMRC<CR>
+
+" Source the vimrc file after saving it
+if has("autocmd")
+  autocmd bufwritepost .vimrc source $MYVIMRC
+endif
+
 
 " Save
 noremap  <silent> <C-S> :update<CR>
@@ -254,8 +249,6 @@ inoremap jk <esc>
 " Always show statusline
 set laststatus=2
 
-" Use 256 colours (Use this setting only if your terminal supports 256 colours)
-set t_Co=256
 
 set fileformat=unix
 set fileformats=unix,dos
@@ -269,14 +262,20 @@ set fileformats=unix,dos
 set timeout
 set ttimeout
 set ttimeoutlen=0
-
-" Kill trailing spaces
-nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 set matchtime=0
-source ~/.gvimrc
 source ~/.vim/bundle/simple-utilities.vim
 let g:instant_markdown_autostart = 0
 
-" Enable mouse use in all modes
-set mouse=a
-set ttymouse=xterm2
+
+" Clipboard enable
+"set clipboard=unnamed
+
+" Show syntax highlighting groups for word under cursor
+nmap <C-S-P> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+
