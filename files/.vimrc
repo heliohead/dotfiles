@@ -12,8 +12,8 @@ Plugin 'gmarik/Vundle.vim'
 " My Plugins here:
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim'}
 Plugin 'tpope/vim-rails.git'
+Plugin 'vim-ruby/vim-ruby'
 Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plugin 'plasticboy/vim-markdown'
 Plugin 'groenewege/vim-less'
@@ -70,6 +70,12 @@ let g:multi_cursor_prev_key='<C-s>'
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 map <C-n> :NERDTreeToggle<CR>
+
+" UltiSnips Trigger configuration.
+set runtimepath+=~/.vim/ultisnips_rep
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 set tabstop=2  shiftwidth=2  softtabstop=2
 set expandtab
@@ -184,6 +190,8 @@ autocmd BufRead,BufNewFile *.js set ft=javascript syntax=javascript
 autocmd BufRead,BufNewFile *.json set ft=json syntax=javascript
 autocmd BufRead,BufNewFile *.twig set ft=htmldjango
 autocmd BufRead,BufNewFile *.rabl set ft=ruby
+autocmd BufNewFile,BufRead *.pdf.erb let b:eruby_subtype='html'
+autocmd BufNewFile,BufRead *.pdf.erb set filetype=eruby
 autocmd BufRead,BufNewFile *.jade set ft=jade
 set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
 
@@ -266,12 +274,17 @@ set matchtime=0
 source ~/.vim/bundle/simple-utilities.vim
 let g:instant_markdown_autostart = 0
 
+" Alias these common mistypes, Shitf+w -> w
+command W w
+command Wq wq
+command WQ wq
+command Q q
 
 " Clipboard enable
 "set clipboard=unnamed
 
 " Show syntax highlighting groups for word under cursor
-nmap <C-S-P> :call <SID>SynStack()<CR>
+nmap <C-S-T> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
   if !exists("*synstack")
     return
