@@ -35,6 +35,7 @@ Plugin 'henrik/vim-ruby-runner'
 Plugin 'benmills/vimux'
 Plugin 'digitaltoad/vim-jade'
 Plugin 'burnettk/vim-angular'
+Plugin 'kchmck/vim-coffee-script'
 " ...
 call vundle#end()            " required
 filetype plugin indent on     " required!
@@ -65,6 +66,9 @@ vnoremap <C-c> "*y
 " mult cursors
 let g:multi_cursor_next_key='<C-d>'
 let g:multi_cursor_prev_key='<C-s>'
+
+" coffee
+let g:syntastic_coffee_coffeelint_args = "--csv --file config.json"
 
 " NerdTree config
 autocmd StdinReadPre * let s:std_in=1
