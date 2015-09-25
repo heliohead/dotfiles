@@ -4,42 +4,41 @@ filetype off
 let &t_AB="\e[48;5;%dm"
 let &t_AF="\e[38;5;%dm"
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#begin()
-" let Vundle manage Vundle
-" required!
-Plugin 'gmarik/Vundle.vim'
+call plug#begin('~/.vim/plugged')
+
 " My Plugins here:
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-rails.git'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
-Plugin 'plasticboy/vim-markdown'
-Plugin 'groenewege/vim-less'
-Plugin 'editorconfig-vim'
-Plugin 'bling/vim-airline'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'danro/rename.vim'
-Plugin 'scrooloose/NERDTree'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'scrooloose/syntastic'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'Tabular'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'yes \| ./install'}
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'suan/vim-instant-markdown'
-Plugin 'henrik/vim-ruby-runner'
-Plugin 'benmills/vimux'
-Plugin 'digitaltoad/vim-jade'
-Plugin 'burnettk/vim-angular'
-Plugin 'kchmck/vim-coffee-script'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'benmills/vimux'
+Plug 'editorconfig-vim'
+Plug 'bling/vim-airline'
+Plug 'airblade/vim-gitgutter'
+Plug 'danro/rename.vim'
+Plug 'scrooloose/NERDTree'
+Plug 'tomtom/tcomment_vim'
+Plug 'scrooloose/syntastic'
+Plug 'jiangmiao/auto-pairs'
+Plug 'Tabular'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/seoul256.vim'
+Plug 'junegunn/vim-xmark', { 'do': 'make'  }
+Plug 'Yggdroot/indentLine'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'henrik/vim-ruby-runner', { 'for': 'ruby'  }
+Plug 'tpope/vim-rails.git', { 'for': 'ruby'  }
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby'  }
+Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown'  }
+Plug 'suan/vim-instant-markdown', { 'for': 'markdown'  }
+Plug 'burnettk/vim-angular', { 'for': 'javascript'  }
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffescript'  }
+Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'yes \| ./install'}
 " ...
-call vundle#end()            " required
+call plug#end()
+
 filetype plugin indent on     " required!
-" .. end vundle
 
 " Theme config
 let g:dracula_termcolors = 256
@@ -49,6 +48,7 @@ set modelines=0
 syntax enable
 set nu
 set ruler
+
 
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set t_Co=256
@@ -69,10 +69,11 @@ let g:multi_cursor_prev_key='<C-s>'
 
 " coffee
 let g:syntastic_coffee_coffeelint_args = "--csv --file config.json"
+let g:syntastic_javascript_checkers = ['jshint']
 
 " NerdTree config
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 map <C-n> :NERDTreeToggle<CR>
 
 " UltiSnips Trigger configuration.
@@ -113,9 +114,12 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
-nmap <leader>0 :%s/\s\+$//<cr>:let @/=''<CR>
+autocmd BufWritePre * :%s/\s\+$//e
 
 let mapleader = ","
+
+
+let g:html_indent_inctags = "html,body,head,tbody"
 
 " Limited line on 80 chars
 set textwidth=80
@@ -124,6 +128,16 @@ set colorcolumn=+1
 "Settings for markdown plugin
 set nofoldenable    " disable folding
 let g:vim_markdown_folding_disabled=1
+
+" Vim
+let g:indentLine_color_term = 239
+
+"GVim
+let g:indentLine_color_gui = '#A4E57E'
+
+" none X terminal
+let g:indentLine_color_tty_light = 7 " (default: 4)
+let g:indentLine_color_dark = 1 " (default: 2)
 
 " search remap
 nnoremap / /\v
@@ -219,7 +233,7 @@ nnoremap <silent> ct :VimuxCloseRunner<CR>
 
 " Custom maps
 set pastetoggle=<leader>p
-nnoremap <leader>m :w <BAR> !lessc % > %:t:r.css<CR><space>
+nnoremap <leader>m :w <BAR> !lessc % > %:t::r.css<CR><space>
 vnoremap <leader>" <esc>`<i"<esc>`>a"<esc>
 
 " Shortcut to .vimrc
@@ -276,7 +290,7 @@ set ttimeout
 set ttimeoutlen=0
 set matchtime=0
 source ~/.vim/bundle/simple-utilities.vim
-let g:instant_markdown_autostart = 0
+let g:instant_markdown_autostart = 1
 
 " Alias these common mistypes, Shitf+w -> w
 command W w
@@ -284,8 +298,9 @@ command Wq wq
 command WQ wq
 command Q q
 
-" Clipboard enable
-"set clipboard=unnamed
+" Clipboard toggle
+nnoremap <leader>= :set clipboard=unnamed<CR>
+nnoremap <leader>- :set clipboard=""<CR>
 
 " Show syntax highlighting groups for word under cursor
 nmap <C-S-T> :call <SID>SynStack()<CR>
@@ -296,3 +311,16 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
+"
+" Set cursor to vertical line when in insert mode.
+"
+if exists('$ITERM_SESSION_ID') && !exists('$TMUX')
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+else
+  let &t_SI = "\<Esc>[3 q"
+  let &t_EI = "\<Esc>[0 q"
+end
+
+set statusline+=%{exists('g:loaded_syntastic_plugin')?SyntasticStatuslineFlag():''}
+set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P>
