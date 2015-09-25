@@ -35,12 +35,12 @@ Plug 'suan/vim-instant-markdown', { 'for': 'markdown'  }
 Plug 'burnettk/vim-angular', { 'for': 'javascript'  }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffescript'  }
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'yes \| ./install'}
-" ...
 call plug#end()
-
 filetype plugin indent on     " required!
+" ...
 
 " Theme config
+set t_Co=256
 let g:dracula_termcolors = 256
 colorscheme dracula
 let macvim_skip_colorscheme=1
@@ -48,13 +48,34 @@ set modelines=0
 syntax enable
 set nu
 set ruler
+highlight ExtraWhitespace ctermbg=red guibg=red
+let g:indentLine_color_term = 239
+let g:indentLine_color_gui = '#A4E57E'
+let g:html_indent_inctags = "html,body,head,tbody"
+let g:indentLine_color_tty_light = 7 " (default: 4)
+let g:indentLine_color_dark = 1 " (default: 2)
+set textwidth=80
+set colorcolumn=+1
+
+" Airline settings
+let g:airline#extensions#tabline#enabled =1
+let g:airline_powerline_fonts=1
+" Always show statusline
+set laststatus=2
+
+set statusline+=%{exists('g:loaded_syntastic_plugin')?SyntasticStatuslineFlag():''}
+set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P>
 
 
-" Use 256 colours (Use this setting only if your terminal supports 256 colours)
-set t_Co=256
-
-" Enable mouse use in all modes
-set mouse=a
+" Whitespace fixes
+set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+autocmd BufWritePre * :%s/\s\+$//e
 
 " remap arrow keys
 noremap <Down> gj
@@ -103,41 +124,13 @@ set title
 set noerrorbells
 set noswapfile
 set nobackup
+set mouse=a
 nnoremap ; :
-highlight ExtraWhitespace ctermbg=red guibg=red
-
-" Whitespace fixes
-set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
-autocmd BufWritePre * :%s/\s\+$//e
 
 let mapleader = ","
-
-
-let g:html_indent_inctags = "html,body,head,tbody"
-
-" Limited line on 80 chars
-set textwidth=80
-set colorcolumn=+1
-
 "Settings for markdown plugin
 set nofoldenable    " disable folding
 let g:vim_markdown_folding_disabled=1
-
-" Vim
-let g:indentLine_color_term = 239
-
-"GVim
-let g:indentLine_color_gui = '#A4E57E'
-
-" none X terminal
-let g:indentLine_color_tty_light = 7 " (default: 4)
-let g:indentLine_color_dark = 1 " (default: 2)
 
 " search remap
 nnoremap / /\v
@@ -189,10 +182,6 @@ inoremap <C-a> <C-o>0
 " On insert mode short to begin and end of word
 inoremap <silence> <C-j> <C-o>b
 inoremap <silence> <C-k> <C-o>e
-
-" Airline settings
-let g:airline#extensions#tabline#enabled =1
-let g:airline_powerline_fonts=1
 
 autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
 autocmd BufRead,BufNewFile *.md set filetype=markdown
@@ -267,13 +256,6 @@ inoremap jk <esc>
 "inoremap <right> <nop>
 "inoremap <up> <nop>
 "inoremap <down> <nop>
-"Ctrl P
-"let g:ctrlp_map = '<c-p>'
-"let g:ctrlp_cmd = 'CtrlP'
-
-
-" Always show statusline
-set laststatus=2
 
 
 set fileformat=unix
@@ -322,5 +304,3 @@ else
   let &t_EI = "\<Esc>[0 q"
 end
 
-set statusline+=%{exists('g:loaded_syntastic_plugin')?SyntasticStatuslineFlag():''}
-set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P>
