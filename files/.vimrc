@@ -14,35 +14,38 @@ Plug 'editorconfig-vim'
 Plug 'bling/vim-airline'
 Plug 'airblade/vim-gitgutter'
 Plug 'danro/rename.vim'
-Plug 'scrooloose/NERDTree'
+Plug 'scrooloose/NERDTree', {'on':  'NERDTreeToggle'}
+Plug 'Xuyuanp/nerdtree-git-plugin', {'on':  'NERDTreeToggle'}
 Plug 'tomtom/tcomment_vim'
 Plug 'scrooloose/syntastic'
 Plug 'jiangmiao/auto-pairs'
 Plug 'Tabular'
+Plug 'dkprice/vim-easygrep'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/seoul256.vim'
-Plug 'junegunn/vim-xmark', { 'do': 'make'  }
+Plug 'junegunn/vim-xmark', {'do': 'make'}
 Plug 'Yggdroot/indentLine'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'henrik/vim-ruby-runner', { 'for': 'ruby'  }
-Plug 'tpope/vim-rails.git', { 'for': 'ruby'  }
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby'  }
+Plug 'henrik/vim-ruby-runner', {'for': 'ruby'}
+Plug 'tpope/vim-rails', {'for': 'ruby'}
+Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
 Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown'  }
-Plug 'suan/vim-instant-markdown', { 'for': 'markdown'  }
-Plug 'burnettk/vim-angular', { 'for': 'javascript'  }
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffescript'  }
+Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+Plug 'burnettk/vim-angular', {'for': 'javascript'}
+Plug 'kchmck/vim-coffee-script', {'for': 'coffescript'}
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'yes \| ./install'}
+Plug 'craigemery/vim-autotag'
+Plug 'ryanoasis/vim-devicons'
 call plug#end()
-filetype plugin indent on     " required!
+filetype plugin indent on " required!
 " ...
 
 " Theme config
 set t_Co=256
-let g:dracula_termcolors = 256
-colorscheme dracula
+colorscheme seoul256
 let macvim_skip_colorscheme=1
 set modelines=0
 syntax enable
@@ -58,14 +61,27 @@ set textwidth=80
 set colorcolumn=+1
 
 " Airline settings
-let g:airline#extensions#tabline#enabled =1
-let g:airline_powerline_fonts=1
-" Always show statusline
 set laststatus=2
-
 set statusline+=%{exists('g:loaded_syntastic_plugin')?SyntasticStatuslineFlag():''}
 set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P>
-
+let g:airline#extensions#tabline#enabled =1
+let g:airline_powerline_fonts=1
+let g:airline_theme= 'ubaryd'
+let g:airline_mode_map = {
+      \ '__' : '-',
+      \ 'n'  : '⛵️ ',
+      \ 'i'  : '🔨 ',
+      \ 'R'  : 'Ṝ',
+      \ 'c'  : 'C',
+      \ 'v'  : '👓 ',
+      \ 'V'  : '👓',
+      \ 's'  : 'Ṡ',
+      \ 'S'  : 'Ṡ',
+      \ }
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.branch = '🔋 '
 
 " Whitespace fixes
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
@@ -103,6 +119,18 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
+"Settings for markdown plugin
+set nofoldenable    " disable folding
+let g:vim_markdown_folding_disabled=1
+
+" ragtag
+let g:ragtag_global_maps = 1
+
+source ~/.vim/bundle/simple-utilities.vim
+
+" Markdown
+let g:instant_markdown_autostart = 1
+
 set tabstop=2  shiftwidth=2  softtabstop=2
 set expandtab
 set encoding=utf-8
@@ -125,16 +153,6 @@ set noerrorbells
 set noswapfile
 set nobackup
 set mouse=a
-nnoremap ; :
-
-let mapleader = ","
-"Settings for markdown plugin
-set nofoldenable    " disable folding
-let g:vim_markdown_folding_disabled=1
-
-" search remap
-nnoremap / /\v
-vnoremap / /\v
 set ignorecase
 set wildignorecase " Ignore case for open files
 set smartcase
@@ -142,16 +160,30 @@ set gdefault
 set incsearch
 set showmatch
 set hlsearch
+set wrap
+set formatoptions=qrn1
+set linebreak
+set fileformats=unix,dos
+set timeout
+set ttimeout
+set ttimeoutlen=0
+set matchtime=0
+set fillchars+=stl:\ ,stlnc:\
+set term=xterm-256color
+set termencoding=utf-8
 
+let mapleader = ","
+nnoremap ; :
+
+" search remap
+nnoremap / /\v
+vnoremap / /\v
 " clear search
 nnoremap <leader><space> :noh<cr>
 
 " match the next brace
-nnoremap <tab> %
+noremap <tab> %
 vnoremap <tab> %
-set wrap
-set formatoptions=qrn1
-set linebreak
 
 " remap movement to move by column layout
 nnoremap j gj
@@ -164,12 +196,26 @@ nnoremap <leader>v V`]
 nnoremap <C-i> :set invpaste paste?<CR>
 set pastetoggle=<C-i>
 
+"" Copy/Paste/Cut
+if has('unnamedplus')
+  set clipboard=unnamed,unnamedplus
+endif
+
+noremap YY "+y<CR>
+noremap <leader>p "+gP<CR>
+noremap XX "+x<CR>
+
+if has('macunix')
+  " pbcopy for OSX copy/paste
+  vmap <C-x> :!pbcopy<CR>
+  vmap <C-c> :w !pbcopy<CR><CR>
+endif
+
 " Buffers
 nnoremap <leader>T :enew<cr>
 nnoremap gy :bnext<CR>
 nnoremap gt :bprevious<cr>
 nnoremap gd :bdelete<cr>
-nnoremap <leader>bl :ls<CR>
 
 " Map Crtl p to Fuzzy Finder
 noremap <C-p> :FZF<CR>
@@ -183,6 +229,7 @@ inoremap <C-a> <C-o>0
 inoremap <silence> <C-j> <C-o>b
 inoremap <silence> <C-k> <C-o>e
 
+" Syntax setup
 autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.txt set filetype=markdown
@@ -200,7 +247,6 @@ autocmd BufRead,BufNewFile *.rabl set ft=ruby
 autocmd BufNewFile,BufRead *.pdf.erb let b:eruby_subtype='html'
 autocmd BufNewFile,BufRead *.pdf.erb set filetype=eruby
 autocmd BufRead,BufNewFile *.jade set ft=jade
-set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
 
 " Neocomplete filebased completion
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
@@ -221,9 +267,9 @@ nnoremap <silent> cr :VimuxRunCommand("clear; ruby " . bufname("%"))<CR>
 nnoremap <silent> ct :VimuxCloseRunner<CR>
 
 " Custom maps
-set pastetoggle=<leader>p
 nnoremap <leader>m :w <BAR> !lessc % > %:t::r.css<CR><space>
 vnoremap <leader>" <esc>`<i"<esc>`>a"<esc>
+vnoremap <C-c> "*y
 
 " Shortcut to .vimrc
 nmap <leader>v :tabedit $MYVIMRC<CR>
@@ -232,12 +278,6 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 if has("autocmd")
   autocmd bufwritepost .vimrc source $MYVIMRC
 endif
-
-
-" Save
-noremap  <silent> <C-S> :update<CR>
-vnoremap <silent> <C-S> <C-C>:update<CR>
-inoremap <silent> <C-S> <C-O>:update<CR>
 
 " Abbreviations
 iabbrev adn and
@@ -257,28 +297,19 @@ inoremap jk <esc>
 "inoremap <up> <nop>
 "inoremap <down> <nop>
 
-
-set fileformat=unix
-set fileformats=unix,dos
-
-" Abbreviations
-"augroup abbreviations
-"autocmd!
-"autocmd FileType html :iabbrev <buffer> --- &mdash;
-"autocmd FileType javascript :iabbrev <buffer> ret return
-"augroup END
-set timeout
-set ttimeout
-set ttimeoutlen=0
-set matchtime=0
-source ~/.vim/bundle/simple-utilities.vim
-let g:instant_markdown_autostart = 1
-
 " Alias these common mistypes, Shitf+w -> w
-command W w
-command Wq wq
-command WQ wq
-command Q q
+if !exists(':W')
+  command W w
+endif
+if !exists(':Wq')
+  command Wq wq
+endif
+if !exists(':WQ')
+  command WQ wq
+endif
+if !exists(':Q')
+  command Q q
+endif
 
 " Clipboard toggle
 nnoremap <leader>= :set clipboard=unnamed<CR>
@@ -303,4 +334,5 @@ else
   let &t_SI = "\<Esc>[3 q"
   let &t_EI = "\<Esc>[0 q"
 end
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
