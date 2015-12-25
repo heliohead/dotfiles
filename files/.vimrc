@@ -1,8 +1,5 @@
 set nocompatible
-source ~/.gvimrc
 filetype off
-let &t_AB="\e[48;5;%dm"
-let &t_AF="\e[38;5;%dm"
 
 call plug#begin('~/.vim/plugged')
 
@@ -17,7 +14,7 @@ Plug 'danro/rename.vim'
 Plug 'scrooloose/NERDTree', {'on':  'NERDTreeToggle'}
 Plug 'Xuyuanp/nerdtree-git-plugin', {'on':  'NERDTreeToggle'}
 Plug 'tomtom/tcomment_vim'
-Plug 'scrooloose/syntastic'
+Plug 'benekastah/neomake'
 Plug 'jiangmiao/auto-pairs'
 Plug 'Tabular'
 Plug 'dkprice/vim-easygrep'
@@ -31,19 +28,23 @@ Plug 'honza/vim-snippets'
 Plug 'henrik/vim-ruby-runner', {'for': 'ruby'}
 Plug 'tpope/vim-rails', {'for': 'ruby'}
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
-Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 Plug 'burnettk/vim-angular', {'for': 'javascript'}
-Plug 'kchmck/vim-coffee-script', {'for': 'coffescript'}
+Plug 'strogonoff/vim-coffee-script', {'for': 'coffee'}
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'yes \| ./install'}
 Plug 'craigemery/vim-autotag'
 Plug 'ryanoasis/vim-devicons'
+Plug 'terryma/vim-expand-region'
+Plug 'sheerun/vim-polyglot'
+Plug 'schickling/vim-bufonly'
 call plug#end()
 filetype plugin indent on " required!
 " ...
 
 " Theme config
+let &t_AB="\e[48;5;%dm"
+let &t_AF="\e[38;5;%dm"
 set t_Co=256
 colorscheme seoul256
 let macvim_skip_colorscheme=1
@@ -51,7 +52,6 @@ set modelines=0
 syntax enable
 set nu
 set ruler
-highlight ExtraWhitespace ctermbg=red guibg=red
 let g:indentLine_color_term = 239
 let g:indentLine_color_gui = '#A4E57E'
 let g:html_indent_inctags = "html,body,head,tbody"
@@ -62,7 +62,6 @@ set colorcolumn=+1
 
 " Airline settings
 set laststatus=2
-set statusline+=%{exists('g:loaded_syntastic_plugin')?SyntasticStatuslineFlag():''}
 set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P>
 let g:airline#extensions#tabline#enabled =1
 let g:airline_powerline_fonts=1
@@ -103,15 +102,19 @@ vnoremap <C-c> "*y
 " mult cursors
 let g:multi_cursor_next_key='<C-d>'
 let g:multi_cursor_prev_key='<C-s>'
+let g:multi_cursor_skip_key='<C-0>'
 
 " coffee
-let g:syntastic_coffee_coffeelint_args = "--csv --file config.json"
-let g:syntastic_javascript_checkers = ['jshint']
+" let g:syntastic_coffee_coffeelint_args = "--csv --file config.json"
+" let g:syntastic_javascript_checkers = ['jshint']
+let g:neomake_javascript_enabled_makers = ['jshint']
+let g:neomake_coffeescript_enabled_makers = ['coffeelint']
 
 " NerdTree config
 " autocmd StdinReadPre * let s:std_in=1
 " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-map <C-n> :NERDTreeToggle<CR>
+nmap <C-n> :NERDTreeToggle<CR>
+nmap <leader>n :NERDTreeToggle<CR>
 
 " UltiSnips Trigger configuration.
 set runtimepath+=~/.vim/ultisnips_rep
@@ -131,9 +134,16 @@ source ~/.vim/bundle/simple-utilities.vim
 " Markdown
 let g:instant_markdown_autostart = 1
 
+" vim-expand-region
+vmap m <Plug>(expand_region_expand)
+vmap <C-m> <Plug>(expand_region_shrink)
+
+if !has('nvim')
+  set encoding=utf-8
+endif
+
 set tabstop=2  shiftwidth=2  softtabstop=2
 set expandtab
-set encoding=utf-8
 set scrolloff=3
 set autoindent
 set showmode
@@ -147,7 +157,7 @@ set backspace=indent,eol,start
 set laststatus=2
 set cursorline
 set list
-set undolevels=20
+set history=200
 set title
 set noerrorbells
 set noswapfile
@@ -169,17 +179,24 @@ set ttimeout
 set ttimeoutlen=0
 set matchtime=0
 set fillchars+=stl:\ ,stlnc:\
-set term=xterm-256color
 set termencoding=utf-8
 
-let mapleader = ","
+let mapleader = "\<Space>"
 nnoremap ; :
+
+" Persistend undo
+if exists("&undodir")
+    set undofile
+    let &undodir=&directory
+    set undolevels=500
+    set undoreload=500
+endif
 
 " search remap
 nnoremap / /\v
 vnoremap / /\v
 " clear search
-nnoremap <leader><space> :noh<cr>
+nnoremap <silent><leader>c :noh<cr>
 
 " match the next brace
 noremap <tab> %
@@ -202,7 +219,7 @@ if has('unnamedplus')
 endif
 
 noremap YY "+y<CR>
-noremap <leader>p "+gP<CR>
+"noremap <leader>pa "+gP<CR>
 noremap XX "+x<CR>
 
 if has('macunix')
@@ -218,8 +235,8 @@ nnoremap gt :bprevious<cr>
 nnoremap gd :bdelete<cr>
 
 " Map Crtl p to Fuzzy Finder
-noremap <C-p> :FZF<CR>
-inoremap <C-p> <C-o>:FZF<CR>
+nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":FZF\<cr>"
+nnoremap <silent> <expr> <Leader>p (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":FZF\<cr>"
 
 " On insert mode short to begin and end of line
 inoremap <C-e> <C-o>$
@@ -233,20 +250,22 @@ inoremap <silence> <C-k> <C-o>e
 autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.txt set filetype=markdown
-autocmd BufRead,BufNewFile *.module set filetype=php
-autocmd BufRead,BufNewFile *.install set filetype=php
-autocmd BufRead,BufNewFile *.test set filetype=php
-autocmd BufRead,BufNewFile *.inc set filetype=php
-autocmd BufRead,BufNewFile *.profile set filetype=php
-autocmd BufRead,BufNewFile *.view set filetype=php
+autocmd BufRead,BufNewFile *.module set filetype=vim
+autocmd BufRead,BufNewFile *.install set filetype=vim
+autocmd BufRead,BufNewFile *.test set filetype=vim
+autocmd BufRead,BufNewFile *.inc set filetype=vim
+autocmd BufRead,BufNewFile *.profile set filetype=bash
 autocmd BufNewFile,BufRead *.less set filetype=less
 autocmd BufRead,BufNewFile *.js set ft=javascript syntax=javascript
 autocmd BufRead,BufNewFile *.json set ft=json syntax=javascript
-autocmd BufRead,BufNewFile *.twig set ft=htmldjango
 autocmd BufRead,BufNewFile *.rabl set ft=ruby
 autocmd BufNewFile,BufRead *.pdf.erb let b:eruby_subtype='html'
 autocmd BufNewFile,BufRead *.pdf.erb set filetype=eruby
 autocmd BufRead,BufNewFile *.jade set ft=jade
+autocmd BufRead,BufNewFile *.coffee set filetype=coffee
+
+" Neomake
+autocmd! BufWritePost * Neomake
 
 " Neocomplete filebased completion
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
@@ -267,7 +286,6 @@ nnoremap <silent> cr :VimuxRunCommand("clear; ruby " . bufname("%"))<CR>
 nnoremap <silent> ct :VimuxCloseRunner<CR>
 
 " Custom maps
-nnoremap <leader>m :w <BAR> !lessc % > %:t::r.css<CR><space>
 vnoremap <leader>" <esc>`<i"<esc>`>a"<esc>
 vnoremap <C-c> "*y
 
@@ -315,6 +333,10 @@ endif
 nnoremap <leader>= :set clipboard=unnamed<CR>
 nnoremap <leader>- :set clipboard=""<CR>
 
+" Erase Ruby comments
+nnoremap <leader>3 :g/^\s*#/d<CR>
+
+
 " Show syntax highlighting groups for word under cursor
 nmap <C-S-T> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
@@ -324,9 +346,7 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
-"
 " Set cursor to vertical line when in insert mode.
-"
 if exists('$ITERM_SESSION_ID') && !exists('$TMUX')
   let &t_SI = "\<Esc>]50;CursorShape=1\x7"
   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
@@ -336,3 +356,15 @@ else
 end
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
+" Relative numbering
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set nornu
+    set number
+  else
+    set rnu
+  endif
+endfunc
+
+" Toggle between normal and relative numbering.
+noremap <leader>r :call NumberToggle()<cr>
