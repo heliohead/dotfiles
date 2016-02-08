@@ -7,19 +7,16 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'benmills/vimux'
-" Plug 'editorconfig-vim'
-Plug 'bling/vim-airline'
+Plug 'tpope/vim-markdown'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
-Plug 'danro/rename.vim'
+Plug 'matze/vim-move'
 Plug 'scrooloose/NERDTree', {'on':  'NERDTreeToggle'}
 Plug 'Xuyuanp/nerdtree-git-plugin', {'on':  'NERDTreeToggle'}
 Plug 'tomtom/tcomment_vim'
 Plug 'benekastah/neomake'
 Plug 'jiangmiao/auto-pairs'
-Plug 'Tabular'
-Plug 'dkprice/vim-easygrep'
-Plug 'junegunn/goyo.vim'
 Plug 'junegunn/seoul256.vim'
 Plug 'junegunn/vim-xmark', {'do': 'make'}
 Plug 'Yggdroot/indentLine'
@@ -31,16 +28,16 @@ Plug 'christoomey/vim-tmux-runner', {'for': 'ruby'}
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
 Plug 'tpope/vim-rails', {'for': 'ruby'}
 Plug 'p0deje/vim-ruby-interpolation', {'for': 'ruby'}
-Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
-Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
-Plug 'burnettk/vim-angular', {'for': 'javascript'}
+Plug 't9md/vim-ruby-xmpfilter', {'for': 'ruby'}
+" Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+" Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 Plug 'strogonoff/vim-coffee-script', {'for': 'coffee'}
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'yes \| ./install'}
 Plug 'craigemery/vim-autotag'
 Plug 'ryanoasis/vim-devicons'
-Plug 'terryma/vim-expand-region'
 Plug 'sheerun/vim-polyglot'
 Plug 'schickling/vim-bufonly'
+Plug 'rking/ag.vim'
 call plug#end()
 filetype plugin indent on " required!
 " ...
@@ -127,6 +124,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 "Settings for markdown plugin
 set nofoldenable    " disable folding
 let g:vim_markdown_folding_disabled=1
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'ruby']
 
 " ragtag
 let g:ragtag_global_maps = 1
@@ -265,6 +263,8 @@ autocmd BufNewFile,BufRead *.less set filetype=less
 autocmd BufRead,BufNewFile *.js set ft=javascript syntax=javascript
 autocmd BufRead,BufNewFile *.json set ft=json syntax=javascript
 autocmd BufRead,BufNewFile *.rabl set ft=ruby
+autocmd BufNewFile,BufRead *.xls.erb let b:eruby_subtype='html'
+autocmd BufNewFile,BufRead *.xls.erb set filetype=eruby
 autocmd BufNewFile,BufRead *.pdf.erb let b:eruby_subtype='html'
 autocmd BufNewFile,BufRead *.pdf.erb set filetype=eruby
 autocmd BufRead,BufNewFile *.jade set ft=jade
@@ -297,6 +297,9 @@ vnoremap <C-c> "*y
 
 " Shortcut to .vimrc
 nmap <leader>v :tabedit $MYVIMRC<CR>
+
+" Delete current file
+nnoremap <leader>ddd :call delete(expand('%')) | bdelete!
 
 " Source the vimrc file after saving it
 if has("autocmd")
@@ -342,6 +345,8 @@ nnoremap <leader>- :set clipboard=""<CR>
 " Erase Ruby comments
 nnoremap <leader>3 :g/^\s*#/d<CR>
 
+" Invsert new line above cursor
+nmap <S-Enter> O<Esc>
 
 " Show syntax highlighting groups for word under cursor
 nmap <C-S-T> :call <SID>SynStack()<CR>
@@ -385,3 +390,11 @@ noremap <leader>ns :s/:\(\w*\)\s*=> /\1: /g<CR>
 
 " Erase all spaces
 "%s/\s\{1,}//gc
+let g:ag_working_path_mode="r"
+autocmd FileType ruby nmap <buffer> <A-m> <Plug>(xmpfilter-mark)
+autocmd FileType ruby xmap <buffer> <A-m> <Plug>(xmpfilter-mark)
+autocmd FileType ruby imap <buffer> <A-m> <Plug>(xmpfilter-mark)
+
+autocmd FileType ruby nmap <buffer> <A-r> <Plug>(xmpfilter-run)
+autocmd FileType ruby xmap <buffer> <A-r> <Plug>(xmpfilter-run)
+autocmd FileType ruby imap <buffer> <A-r> <Plug>(xmpfilter-run)
