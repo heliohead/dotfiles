@@ -15,13 +15,12 @@ Plug 'craigemery/vim-autotag'
 Plug 'schickling/vim-bufonly'
 
 " Snippets
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " Navigate/Search
 Plug 'rking/ag.vim'
 Plug 'matze/vim-move'
-Plug 'scrooloose/NERDTree', {'on':  'NERDTreeToggle'}
+Plug 'scrooloose/NERDTree', {'on': 'NERDTreeToggle'}
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'yes \| ./install'}
 
 " Theme
@@ -34,7 +33,7 @@ Plug 'Yggdroot/indentLine'
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'Xuyuanp/nerdtree-git-plugin', {'on':  'NERDTreeToggle'}
+Plug 'Xuyuanp/nerdtree-git-plugin', {'on': 'NERDTreeToggle'}
 
 " Ruby
 Plug 'henrik/vim-ruby-runner', {'for': 'ruby'}
