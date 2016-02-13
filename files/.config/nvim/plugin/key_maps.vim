@@ -20,6 +20,7 @@ nmap C :%s//g<LEFT><LEFT>
 " Invert visual select with visual line
 noremap v <S-v>
 noremap <S-v> v
+noremap <C-v> <S-v><C-v>
 
 " On insert mode short to begin and end of line
 inoremap <C-e> <C-o>$
