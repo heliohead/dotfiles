@@ -10,10 +10,16 @@
 "inoremap <down> <nop>
 
 nnoremap ; :
-inoremap ju <esc>
 noremap YY "+y<CR>
 "noremap <leader>pa "+gP<CR>
 noremap XX "+x<CR>
+
+" Change words shortcut C{target}/{new word}<CR>
+nmap C :%s//g<LEFT><LEFT>
+
+" Invert visual select with visual line
+noremap v <S-v>
+noremap <S-v> v
 
 " On insert mode short to begin and end of line
 inoremap <C-e> <C-o>$
@@ -31,9 +37,6 @@ vnoremap <C-c> "*y
 
 " Shortcut to .vimrc
 nmap <leader>v :tabedit $MYVIMRC<CR>
-
-" Delete current file
-nnoremap <leader>ddd :call delete(expand('%')) | bdelete!
 
 " Abbreviations
 iabbrev adn and
@@ -78,7 +81,7 @@ noremap <leader>ss :normal cs"'<CR>
 noremap <leader>ns :s/:\(\w*\)\s*=> /\1: /g<CR>
 
 " Erase all spaces
-"%s/\s\{1,}//gc
+nnoremap <leader>es :%s/\s\{1,}//gc<CR>
 
 " Buffers
 noremap <silent><tab> :bn<CR>
