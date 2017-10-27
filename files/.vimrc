@@ -44,11 +44,12 @@ set fillchars+=stl:\ ,stlnc:\
 set termencoding=utf-8
 set nofoldenable
 set nowrap
+set guioptions=
 set iskeyword+=-
 set shell=/bin/bash
 
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png,*.ico
-set wildignore+=*.pdf,*.psd
+set wildignore+=*.pdf,*.psd,*.sublime-project
 set wildignore+=node_modules/*,bower_components/*
 
 " if has('unnamedplus')
