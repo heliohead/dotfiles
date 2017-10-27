@@ -7,12 +7,14 @@ Plug 'tpope/vim-endwise'
 Plug 'tomtom/tcomment_vim'
 Plug 'benekastah/neomake'
 Plug 'jiangmiao/auto-pairs'
+" Plug 'Raimondi/delimitMate'
 Plug 'schickling/vim-bufonly'
 Plug 'janko-m/vim-test'
 Plug 't9md/vim-textmanip'
 Plug 'clearnote01/notes_syntax_vim'
 Plug 'jremmen/vim-ripgrep'
-Plug 'idbrii/textobj-word-column.vim'
+" Plug 'idbrii/textobj-word-column.vim'
+" Plug 'AndrewRadev/splitjoin.vim'
 " Plug 'christoomey/vim-tmux-runner'
 " Plug 'christoomey/vim-tmux-navigator'
 
@@ -20,13 +22,13 @@ Plug 'idbrii/textobj-word-column.vim'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " Navigate/Search
-Plug 'matze/vim-move'
+" Plug 'matze/vim-move'
 Plug 'scrooloose/NERDTree', {'on':  'NERDTreeToggle'}
 Plug 'unblevable/quick-scope'
 " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Plug 'junegunn/fzf.vim'
 " Plug 'mileszs/ack.vim'
-Plug 'Yggdroot/LeaderF'
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 " Theme
 Plug 'junegunn/seoul256.vim'
@@ -37,7 +39,7 @@ Plug 'Yggdroot/indentLine'
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'jreybert/vimagit'
+" Plug 'jreybert/vimagit'
 
 " Ruby
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
@@ -59,8 +61,12 @@ Plug 'elixir-lang/vim-elixir', {'for': 'elixir'}
 " Other languages
 " Plug 'strogonoff/vim-coffee-script', {'for': 'coffee'}
 " Plug 'kewah/vim-stylefmt', {'for': 'css'}
+" Plug 'udalov/kotlin-vim'
+Plug 'junegunn/vim-xmark', { 'do': 'make' }
 Plug 'slim-template/vim-slim', {'for': 'slim'}
 Plug 'dag/vim-fish'
+
+" Plug 'johngrib/vim-game-code-break'
 
 call plug#end()
 
