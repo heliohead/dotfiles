@@ -20,7 +20,7 @@ noremap YY "+y
 noremap XX "+x<CR>
 
 " Change words shortcut C{target}/{new word}<CR>
-nmap C :%s//g<LEFT><LEFT>
+nmap C :%s// <LEFT><LEFT>
 
 " Invert visual select with visual line
 noremap v <S-v>
@@ -124,8 +124,15 @@ cnoremap <ESC>f     <S-Right>
 cnoremap <ESC><C-F> <S-Right>
 cnoremap <ESC><C-H> <C-W>
 
+cnoreabbrev rg Rg
+cnoreabbrev RG Rg
+
 " Terminal window nav
 noremap <C-w><C-w> <C-\><C-n><C-w>k
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
 
 " Set scrolloff
 nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
