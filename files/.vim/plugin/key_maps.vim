@@ -140,6 +140,7 @@ nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
 nnoremap <Leader>fs :vsplit **/*
 nnoremap <Leader>fe :e **/*
 
+nnoremap Q <ESC>
 
 nnoremap <silent> <expr> <Leader><Leader>
               \ (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":LeaderfFile\<cr>"
