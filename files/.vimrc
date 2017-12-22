@@ -47,6 +47,7 @@ set nowrap
 set guioptions=
 set iskeyword+=-
 set shell=/bin/bash
+set guifont=Monaco:h16
 
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png,*.ico
 set wildignore+=*.pdf,*.psd,*.sublime-project
