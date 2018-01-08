@@ -147,3 +147,5 @@ nnoremap <silent> <expr> <Leader><Leader>
 
 nnoremap <silent> <expr> <Leader>lb
               \ (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":LeaderfMruCwd\<cr>"
+
+nnoremap <silent> gs :Gstatus<CR>
