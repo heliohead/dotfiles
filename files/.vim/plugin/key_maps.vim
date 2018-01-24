@@ -45,6 +45,8 @@ vnoremap ( <esc>`<i(<esc>`>a)<esc>
 vnoremap ) <esc>`<i( <esc>`>a )<esc>
 vnoremap <leader>yc :let @+=@:<CR>
 
+nnoremap <leader>w :w!<CR>
+
 " Visual mark to end of line
 nmap <leader>ve <s-v> g_
 
