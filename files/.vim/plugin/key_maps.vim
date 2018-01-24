@@ -15,6 +15,8 @@ nnoremap <A-o> j A
 nnoremap j gj
 nnoremap k gk
 
+" copy
+vnoremap <C-c> "*y
 noremap YY "+y
 "noremap <leader>pa "+gP<CR>
 noremap XX "+x<CR>
@@ -37,9 +39,11 @@ nnoremap H 00
 nnoremap L $
 
 " Custom maps
-vnoremap <leader>' <esc>`<i"<esc>`>a"<esc>
+vnoremap ' <esc>`<i'<esc>`>a'<esc>
+vnoremap " <esc>`<i"<esc>`>a"<esc>
+vnoremap ( <esc>`<i(<esc>`>a)<esc>
+vnoremap ) <esc>`<i( <esc>`>a )<esc>
 vnoremap <leader>yc :let @+=@:<CR>
-vnoremap <C-c> "*y
 
 " Visual mark to end of line
 nmap <leader>ve <s-v> g_
@@ -54,9 +58,6 @@ nnoremap / /\v
 vnoremap / /\v
 " clear search
 nnoremap <silent><leader>c :noh<CR>
-
-" copy
-vnoremap <C-c> "*y
 
 " NerdTree config
 nmap <C-n> :NERDTreeToggle<CR>
@@ -79,10 +80,14 @@ noremap <leader>ns :s/:\(\w*\)\s*=> /\1: /g<CR>
 " Erase all spaces
 nnoremap <leader>es :%s/\s\{1,}//gc<CR>
 
+" Erase empty lines
+nnoremap <leader>el :g/^$/d<CR>
+
 " Buffers
 " noremap <silent><tab> :bn<CR>
 " noremap <silent><s-tab> :bp<CR>
 nnoremap <silent><leader>d :bd<CR>
+nnoremap <silent><leader>o :Bonly <CR>
 nnoremap <silent><leader>bd :bp\|bd \#<CR>
 nnoremap <silent><leader>fd :bdelete!<CR>
 
@@ -148,4 +153,4 @@ nnoremap <silent> <expr> <Leader><Leader>
 nnoremap <silent> <expr> <Leader>lb
               \ (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":LeaderfMruCwd\<cr>"
 
-nnoremap <silent> gs :Gstatus<CR>
+nnoremap <silent>gs :Gstatus<CR>
