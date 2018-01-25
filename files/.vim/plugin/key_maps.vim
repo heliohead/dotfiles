@@ -39,10 +39,10 @@ nnoremap H 00
 nnoremap L $
 
 " Custom maps
-vnoremap ' <esc>`<i'<esc>`>a'<esc>
-vnoremap " <esc>`<i"<esc>`>a"<esc>
-vnoremap ( <esc>`<i(<esc>`>a)<esc>
-vnoremap ) <esc>`<i( <esc>`>a )<esc>
+vnoremap <leader>' <esc>`<i'<esc>`>a'<esc>
+vnoremap <leader>" <esc>`<i"<esc>`>a"<esc>
+vnoremap <leader>( <esc>`<i(<esc>`>a)<esc>
+vnoremap <leader>) <esc>`<i( <esc>`>a )<esc>
 vnoremap <leader>yc :let @+=@:<CR>
 
 nnoremap <leader>w :w!<CR>
@@ -133,6 +133,7 @@ cnoremap <ESC><C-H> <C-W>
 
 cnoreabbrev rg Rg
 cnoreabbrev RG Rg
+cnoreabbrev gc Gcommit --amend
 
 " Terminal window nav
 noremap <C-w><C-w> <C-\><C-n><C-w>k
