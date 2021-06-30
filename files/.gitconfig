@@ -34,12 +34,12 @@
   pom = push origin master
   amend = commit --amend -C HEAD
   wdiff = diff --color-words
-  standup = log --since yesterday --author mperham@gmail.com
+  standup = log --since yesterday --author hheelliioo@live.com
   rst = reset --hard
 [core]
   pager = less -FRSX
   whitespace=trailing-space
-  excludesfile = /Users/mperham/.gitignore_global
+  excludesfile = /Users/lio/.gitignore_global
   editor = vim
 [apply]
   whitespace = fix

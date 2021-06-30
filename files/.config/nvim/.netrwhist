@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/Users/helio/.config/nvim/UltiSnips'
+let g:netrw_dirhist_6='/Users/helio/projects/new_izak/lib/izak_web/live/payment_live'
+let g:netrw_dirhist_5='/Users/helio/projects/izak/app/views/expense_payments'
+let g:netrw_dirhist_4='/Users/helio/projects/izak/app/views/products'
+let g:netrw_dirhist_3='/Volumes/HDD/Users/helio/.config/nvim/plugin'
+let g:netrw_dirhist_2='/Volumes/HDD/Users/helio/.config/nvim'
+let g:netrw_dirhist_1='/Volumes/HDD/Users/helio/.config/nvim/autoload'
+let g:netrw_dirhist_0='/Volumes/HDD/Users/helio/projects/multiplybot/web/lib/multiplybot/management'
+let g:netrw_dirhist_9='/Volumes/HDD/Users/helio/.config/nvim/_deps/vim-elixir/ftplugin'
+let g:netrw_dirhist_8='/Volumes/HDD/Users/helio/.config/nvim/_deps/vim-elixir'

@@ -1,11 +1,14 @@
 source $HOME/.config/nvim/plugs.vim
 
-filetype off
+filetype plugin on
 let mapleader = "\<Space>"
 
 set nocompatible
-set tabstop=2  shiftwidth=2  softtabstop=2
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 set expandtab
+set smarttab
 set scrolloff=3
 set autoindent
 set showmode
@@ -43,8 +46,11 @@ set matchtime=0
 set fillchars+=stl:\ ,stlnc:\
 set termencoding=utf-8
 set nofoldenable
+set iskeyword+=-
 
-
-if has('unnamedplus')
-  set clipboard=unnamed,unnamedplus
-endif
+" if has('unnamedplus')
+"   set clipboard=unnamed,unnamedplus
+" endif
+"
+" Don't try to highlight lines longer than 300 characters.
+set synmaxcol=300

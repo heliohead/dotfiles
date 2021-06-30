@@ -12,3 +12,4 @@ if !exists(':Q')
   command Q q
 endif
 
+iabbrev spc &nbsp;

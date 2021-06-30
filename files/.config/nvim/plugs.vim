@@ -1,51 +1,76 @@
 call plug#begin(expand('~/.config/nvim/_deps'))
 
 " Tools
-Plug 'tpope/vim-surround'
+Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-projectionist'
 Plug 'tomtom/tcomment_vim'
-Plug 'benekastah/neomake'
+Plug 'neomake/neomake'
 Plug 'jiangmiao/auto-pairs'
-Plug 'junegunn/vim-xmark', {'do': 'make'}
-Plug 'terryma/vim-multiple-cursors'
-" Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
-" Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
-Plug 'craigemery/vim-autotag'
 Plug 'schickling/vim-bufonly'
+Plug 'janko-m/vim-test'
+Plug 't9md/vim-textmanip'
+Plug 'clearnote01/notes_syntax_vim'
+Plug 'mikepjb/vim-chruby'
+Plug 'kassio/neoterm'
+Plug 'jremmen/vim-ripgrep', { 'commit': '0df3ac2c3e51d27637251a5849f892c3a0f0bce0' }
+Plug 'tpope/vim-surround'
 
 " Snippets
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " Navigate/Search
-Plug 'rking/ag.vim'
-Plug 'matze/vim-move'
-Plug 'scrooloose/NERDTree', {'on': 'NERDTreeToggle'}
-Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'yes \| ./install'}
+Plug 'scrooloose/NERDTree', {'on':  'NERDTreeToggle'}
+Plug 'unblevable/quick-scope'
+" Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }"
+Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 
 " Theme
 Plug 'junegunn/seoul256.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'ryanoasis/vim-devicons'
 Plug 'Yggdroot/indentLine'
 
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'Xuyuanp/nerdtree-git-plugin', {'on': 'NERDTreeToggle'}
+" Plug 'jreybert/vimagit'
 
 " Ruby
-Plug 'henrik/vim-ruby-runner', {'for': 'ruby'}
-Plug 'christoomey/vim-tmux-runner', {'for': 'ruby'}
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
-Plug 'tpope/vim-rails', {'for': 'ruby'}
-Plug 'p0deje/vim-ruby-interpolation', {'for': 'ruby'}
-Plug 't9md/vim-ruby-xmpfilter', {'for': 'ruby'}
+Plug 'tpope/vim-rails'
+Plug 'kana/vim-textobj-user'
+Plug 'p0deje/vim-ruby-interpolation'
+Plug 'rhysd/vim-textobj-ruby'
+
+" Python
+Plug 'Vimjas/vim-python-pep8-indent'
+
+" Dart
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'hankchiutw/flutter-reload.vim'
+
+
+" Crystal
+" Plug 'rhysd/vim-crystal', {'for': 'cristal'}
+
+" Elixir
+Plug 'elixir-lang/vim-elixir', {'for': 'elixir'}
+Plug 'mhinz/vim-mix-format', {'for': 'elixir'}
+Plug 'slashmili/alchemist.vim', {'for': 'elixir'}
 
 " Other languages
-Plug 'strogonoff/vim-coffee-script', {'for': 'coffee'}
-Plug 'sheerun/vim-polyglot'
+Plug 'junegunn/vim-xmark', { 'do': 'make' }
+Plug 'slim-template/vim-slim', {'for': 'slim'}
+Plug 'dag/vim-fish'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'yuezk/vim-js'
+" Plug 'maksimr/vim-jsbeautify'
+
+" Plug 'johngrib/vim-game-code-break'
 
 call plug#end()
 
