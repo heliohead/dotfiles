@@ -1,0 +1,1 @@
+/Users/helio/.config/fisherman/dartfish/fish_right_prompt.fish
