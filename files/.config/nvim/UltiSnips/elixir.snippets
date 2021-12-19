@@ -1,5 +1,13 @@
 snippet fb "Debugger Helper"
-IO.inspect("0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0")
+IO.inspect(String.duplicate("*.*", 25))
 IO.inspect($1)
-IO.inspect("0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0*-0")
+IO.inspect(String.duplicate("*.*", 25))
+endsnippet
+
+snippet bt "Belongs to" b
+belongs_to :${1:module}, ${1/\w+\s*/\u$0/g}
+endsnippet
+
+snippet hm "Has Many" b
+has_many :${1:module}, ${1/\w+\s*/\u$0/g}
 endsnippet

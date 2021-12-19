@@ -79,6 +79,8 @@ noremap <leader>ss :normal sr"'<CR>
 " Convert old style ruby hashes to new style
 noremap <leader>ns :s/:\(\w*\)\s*=> /\1: /g<CR>
 
+noremap <leader>sn :s/\<\(\h\w*\)\.\(\w\+\)\>/\1["\2"]/g <CR>
+
 " Erase all spaces
 nnoremap <leader>es :%s/\s\{1,}//gc<CR>
 
@@ -104,7 +106,7 @@ nnoremap <leader>tl :TestNearest<CR>
 nnoremap <leader>tf :TestFile<CR>
 nnoremap <leader>tp :TestLast<CR>
 nnoremap <leader>ts :TestSuite<CR>
-nnoremap <leader>ct :!bash -c 'ctags -R --exclude=.git --exclude=tmp --exclude=public --exclude=coverage .'<CR>
+nnoremap <leader>ct :!bash -c 'ctags -R --exclude=.git --exclude=tmp --exclude=node_modules --exclude=public --exclude=coverage .'<CR>
 " inoremap <A-c> ç
 " inoremap <S-A-c> Ç
 " inoremap <A-e> <C-K>
@@ -147,7 +149,7 @@ nnoremap <Leader>fe :e **/*
 nnoremap Q <ESC>
 
 nnoremap <silent> <expr> <Leader><Leader>
-              \ (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":LeaderfFile\<cr>"
+              \ (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":GFiles\<cr>"
 
 nnoremap <silent> <expr> <Leader>lb
               \ (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":LeaderfMruCwd\<cr>"
@@ -160,4 +162,6 @@ nnoremap <silent> <expr> <tab>
 
 nnoremap <silent> <expr> <s-tab>
               \ (expand('%') =~ 'NERD_tree_1' ? "\<c-w>\<c-w>" : '').":bp<CR>"
-nnoremap <silent>gs :Gstatus<CR>
+nnoremap <silent>gs :Git<CR>
+
+tnoremap <Esc> <C-\><C-n>

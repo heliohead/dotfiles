@@ -5,6 +5,7 @@ Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-abolish'
 Plug 'tomtom/tcomment_vim'
 Plug 'neomake/neomake'
 Plug 'jiangmiao/auto-pairs'
@@ -12,7 +13,6 @@ Plug 'schickling/vim-bufonly'
 Plug 'janko-m/vim-test'
 Plug 't9md/vim-textmanip'
 Plug 'clearnote01/notes_syntax_vim'
-Plug 'mikepjb/vim-chruby'
 Plug 'kassio/neoterm'
 Plug 'jremmen/vim-ripgrep', { 'commit': '0df3ac2c3e51d27637251a5849f892c3a0f0bce0' }
 Plug 'tpope/vim-surround'
@@ -21,10 +21,13 @@ Plug 'tpope/vim-surround'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " Navigate/Search
-Plug 'scrooloose/NERDTree', {'on':  'NERDTreeToggle'}
+Plug 'scrooloose/NERDTree'
 Plug 'unblevable/quick-scope'
 " Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }"
-Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+" Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'airblade/vim-rooter'
 
 " Theme
 Plug 'junegunn/seoul256.vim'
@@ -48,19 +51,22 @@ Plug 'rhysd/vim-textobj-ruby'
 Plug 'Vimjas/vim-python-pep8-indent'
 
 " Dart
-Plug 'dart-lang/dart-vim-plugin'
-Plug 'thosakwe/vim-flutter'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'hankchiutw/flutter-reload.vim'
+" Plug 'dart-lang/dart-vim-plugin'
+" Plug 'thosakwe/vim-flutter'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'hankchiutw/flutter-reload.vim'
 
 
 " Crystal
 " Plug 'rhysd/vim-crystal', {'for': 'cristal'}
 
 " Elixir
-Plug 'elixir-lang/vim-elixir', {'for': 'elixir'}
+Plug 'elixir-editors/vim-elixir', {'for': 'elixir'}
 Plug 'mhinz/vim-mix-format', {'for': 'elixir'}
-Plug 'slashmili/alchemist.vim', {'for': 'elixir'}
+Plug 'andyl/vim-textobj-elixir'
+
+" Plug 'slashmili/alchemist.vim', {'for': 'elixir'}
+" Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
 
 " Other languages
 Plug 'junegunn/vim-xmark', { 'do': 'make' }
@@ -71,6 +77,7 @@ Plug 'yuezk/vim-js'
 " Plug 'maksimr/vim-jsbeautify'
 
 " Plug 'johngrib/vim-game-code-break'
+"
 
 call plug#end()
 
