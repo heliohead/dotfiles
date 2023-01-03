@@ -8,7 +8,7 @@ let g:neomake_ruby_reek_maker = {
     \ 'args': ['--single-line'],
     \ 'errorformat': g:neomake_ruby_reek_maker_errorformat,
     \ }
-let b:neomake_ruby_rubocop_exe = "/Volumes/HDD/Users/helio/.gem/ruby/2.4.2/bin/rubocop"
+let b:neomake_ruby_rubocop_exe = "/Users/helio/.asdf/shims/rubocop"
 let g:neomake_ruby_enabled_makers = ['rubocop']
 let g:neomake_python_enabled_makers = ['flake8', 'pylint']
 let g:neomake_javascript_enabled_makers = ['eslint']

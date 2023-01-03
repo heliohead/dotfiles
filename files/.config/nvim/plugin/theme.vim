@@ -13,3 +13,5 @@ let g:indentLine_color_tty_light = 7 " (default: 4)
 let g:indentLine_color_dark = 1 " (default: 2)
 set textwidth=80
 set colorcolumn=+1
+
+let g:highlightedyank_highlight_duration = 100

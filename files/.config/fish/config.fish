@@ -3,8 +3,7 @@ alias e 'nvim'
 alias g 'git'
 alias cl 'clear'
 alias rs "bin/rails server"
-alias ms "mix phx.server"
-alias mc "iex -S mix phx.server"
+alias ms "iex -S mix phx.server"
 alias ie "iex -S mix"
 alias rp "bundle exec passenger start --min-instances 2 --max-pool-size 2"
 alias rc "bin/rails console"
@@ -21,7 +20,8 @@ alias hideFiles 'defaults write com.apple.finder AppleShowAllFiles NO; killall F
 alias brewski='brew update and brew upgrade --all and brew cleanup; brew doctor'
 alias vi "vim -u NONE -U NONE -N"
 alias rserver "ruby -run -e httpd . -p 8000"
-alias pg_start "/Users/helio/.asdf/installs/postgres/13.2/bin/pg_ctl -D /Users/helio/.asdf/installs/postgres/13.2/data -l logfile start"
+alias pg-up "pg_ctl -D /usr/local/var/postgres -l logfile start"
+alias pg-down "pg_ctl -D /usr/local/var/postgres stop -s -m fast"
 alias l "ls -lha"
 alias kill3000 "kill -9 (lsof -i:3000 -t)"
 alias dt "bin/rails db:environment:set RAILS_ENV=test db:drop db:create db:migrate"
@@ -29,22 +29,17 @@ alias dtd "bin/rails db:environment:set RAILS_ENV=development db:drop db:create 
 alias dtp "bin/rails db:test:prepare"
 set -x EDITOR /usr/local/bin/vim
 set -x WEB_CONCURRENCY 0
-set -x RAILS_ENV development
-set -x SENDMAIL_USERNAME helioheadmail@gmail.com
-set -x SENDMAIL_PASSWORD f5ZYsvpEM7bJMCH488nd4t
 set -x ERL_AFLAGS "-kernel shell_history enabled"
-set -x AWS_ACCESS_KEY_ID "UL66GRVILJ4ORSMMUUJO"
-set -x AWS_SECRET_ACCESS_KEY "OppCidsLYBQN+0eVKUaxDoPwM1D+z8ar4P714SPZZR0"
-# set -x RUBYOPT '-W:no-deprecated -W:no-experimental'
-# set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
+# set -x RUBYOPT '-W:no-deprecated'
+# set -x RUBY_CONFIGURE_OPTS "--with-openssl-dir=/opt/homebrew/opt/openssl@1.1"
 export LANG=C
+set -x LANG en_US.UTF-8
 
-set ANDROID_HOME /Volumes/HDD/Users/helio/Library/Android/sdk
-set -gx PATH $PATH /Volumes/HDD/Users/helio/Library/Android/sdk
-set -gx PATH $PATH /Volumes/HDD/Users/helio/.pub-cache/bin
-set PATH /Volumes/HDD/Users/helio/flutter/bin $PATH
-set PATH /Library/Frameworks/Python.framework/Versions/3.8/bin $PATH
+set PATH /Library/Frameworks/Python.framework/Versions/3.9/bin $PATH
 
+fish_add_path /opt/homebrew/bin
+fish_add_path /usr/local/opt/openjdk/bin
+fish_add_path ~/.goaws
 
 function google
   open -a "Google Chrome" $argv
@@ -62,4 +57,36 @@ function yarn
   env NODE_OPTIONS=--no-deprecation yarn $argv
 end
 
-source /usr/local/opt/asdf/asdf.fish
+function remon
+  killall DisplayLinkUserAgent
+  sleep 1
+  open -a "/Applications/DisplayLink Manager.app"
+end
+
+function mamp-of
+  brew services stop mysql
+  # brew services stop php@7.4
+  # brew services stop httpd
+end
+
+function mamp-on
+  brew services start mysql
+  # brew services start php@7.4
+  # brew services start httpd
+end
+
+source /opt/homebrew/opt/asdf/libexec/asdf.fish
+
+if test (arch) = "i386"
+  set HOMEBREW_PREFIX /usr/local
+else
+  set HOMEBREW_PREFIX /opt/homebrew
+end
+
+# Add the Homebrew prefix to $PATH. -m flag ensures it's at the beginning
+# of the path since the path might already be in $PATH (just not at the start)
+fish_add_path -m --path $HOMEBREW_PREFIX/bin
+
+alias intel 'arch -x86_64 /usr/local/bin/fish'
+
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=/opt/homebrew/opt/openssl@1.1"

@@ -14,6 +14,7 @@ nnoremap <A-o> j A
 " remap movement to move by column layout
 nnoremap j gj
 nnoremap k gk
+nnoremap gd <nop>
 
 " copy
 vnoremap <C-c> "*y
@@ -35,7 +36,7 @@ inoremap <C-a> <C-o>0
 inoremap <C-w> <C-o>w
 inoremap <C-b> <C-o>b
 
-nnoremap H 00
+nnoremap H 00w
 nnoremap L $
 
 " Custom maps
@@ -46,6 +47,9 @@ vnoremap <leader>) <esc>`<i( <esc>`>a )<esc>
 vnoremap <leader>yc :let @+=@:<CR>
 
 nnoremap <leader>w :w!<CR>
+
+" Braces around word
+nnoremap <leader>r9 ciw()<esc>P<esc>
 
 " Visual mark to end of line
 nmap <leader>ve <s-v> g_
@@ -59,12 +63,7 @@ iabbrev waht what
 nnoremap / /\v
 vnoremap / /\v
 " clear search<CR>
-nnoremap <silent><leader>c :noh <CR> :cclose <CR>
-
-" NerdTree config
-nmap <C-n> :NERDTreeToggle<CR>
-nmap <leader>n :NERDTreeToggle<CR>
-nmap <leader>nf :NERDTreeFind<CR>
+nnoremap <silent><leader><leader> :noh <CR> :cclose <CR>
 
 " Clipboard toggle
 nnoremap <leader>= :set clipboard=unnamed<CR>
@@ -84,6 +83,9 @@ noremap <leader>sn :s/\<\(\h\w*\)\.\(\w\+\)\>/\1["\2"]/g <CR>
 " Erase all spaces
 nnoremap <leader>es :%s/\s\{1,}//gc<CR>
 
+" Git checkout
+nnoremap <leader>co :Git checkout %<CR>
+
 " Erase empty lines
 nnoremap <leader>el :g/^$/d<CR>
 
@@ -91,7 +93,8 @@ nnoremap <leader>el :g/^$/d<CR>
 " noremap <silent><tab> :bn<CR>
 " noremap <silent><s-tab> :bp<CR>
 nnoremap <silent><leader>d :bd<CR>
-nnoremap <silent><leader>o :Bonly <CR> :NERDTreeClose <CR>
+" nnoremap <silent><leader>o :Bonly <CR> :Fern . -drawer -reveal=% -width=35 -toggle <CR>
+nnoremap <silent><leader>o :Bonly <CR> :only <CR>
 nnoremap <silent><leader>bd :bp\|bd \#<CR>
 nnoremap <silent><leader>fd :bdelete!<CR>
 
@@ -100,7 +103,7 @@ nnoremap <silent><leader>fd :bdelete!<CR>
 nnoremap <silent><leader>nn :e ~/info.txt<CR>
 
 " Multiline edit
-nnoremap <leader>8 *Ncgn
+nnoremap <leader>i *Ncgn
 
 nnoremap <leader>tl :TestNearest<CR>
 nnoremap <leader>tf :TestFile<CR>
@@ -111,7 +114,8 @@ nnoremap <leader>ct :!bash -c 'ctags -R --exclude=.git --exclude=tmp --exclude=n
 " inoremap <S-A-c> Ç
 " inoremap <A-e> <C-K>
 " inoremap <A-n> <C-K>~
-" inoremap <A-i> <C-K>õ
+" inoremap <A-i> <C-K>
+nnoremap <C-s> :w<CR>
 
 cnoremap <C-A>      <Home>
 cnoremap <C-B>      <Left>
@@ -125,11 +129,12 @@ cnoremap <ESC>f     <S-Right>
 cnoremap <ESC><C-F> <S-Right>
 cnoremap <ESC><C-H> <C-W>
 
-
 cnoreabbrev gc Gcommit --amend
 
 cnoreabbrev rg Rg
 cnoreabbrev RG Rg
+
+cnoreabbrev qq qa!
 
 nnoremap <leader>rg :execute "Rg " . expand("<cword>")<cr>
 
@@ -148,20 +153,20 @@ nnoremap <Leader>fe :e **/*
 
 nnoremap Q <ESC>
 
-nnoremap <silent> <expr> <Leader><Leader>
-              \ (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":GFiles\<cr>"
+nnoremap <silent> <expr> <Leader>ff
+              \ (expand('%') =~ 'fern' ? "\<c-w>\<c-w>" : '').":GFiles\<cr>"
 
-nnoremap <silent> <expr> <Leader>lb
-              \ (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":LeaderfMruCwd\<cr>"
-
-" nnoremap <silent> <expr> :
-"               \ (expand('%') =~ 'NERD_tree_1' ? "\<c-w>\<c-w>" : '').":"
-"
 nnoremap <silent> <expr> <tab>
-              \ (expand('%') =~ 'NERD_tree_1' ? "\<c-w>\<c-w>" : '').":bn<CR>"
+              \ (expand('%') =~ 'fern' ? "\<c-w>\<c-w>" : '').":bn<CR>"
 
 nnoremap <silent> <expr> <s-tab>
-              \ (expand('%') =~ 'NERD_tree_1' ? "\<c-w>\<c-w>" : '').":bp<CR>"
+              \ (expand('%') =~ 'fern' ? "\<c-w>\<c-w>" : '').":bp<CR>"
 nnoremap <silent>gs :Git<CR>
 
 tnoremap <Esc> <C-\><C-n>
+
+" Git nav
+nnoremap <Leader>gj :GitGutterNextHunk<CR>
+nnoremap <Leader>gk :GitGutterPrevHunk<CR>
+
+xnoremap p "_dP
